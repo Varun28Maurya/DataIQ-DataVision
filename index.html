@@ -12,7 +12,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-       
         body {
             display: flex;
             height: 100vh;
@@ -21,7 +20,6 @@
             overflow: hidden;
         }
 
-    
         .sidebar {
             width: 280px;
             background: rgba(255, 255, 255, 0.1);
@@ -32,7 +30,6 @@
             box-shadow: 5px 0 15px rgba(0, 198, 255, 0.2);
         }
 
-       
         .sidebar h2 {
             font-size: 1.5em;
             margin-bottom: 20px;
@@ -42,7 +39,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-       
         .chat-history {
             flex: 1;
             overflow-y: auto;
@@ -61,7 +57,6 @@
             background: rgba(0, 198, 255, 0.2);
         }
 
-      
         .clear-history {
             margin-top: 15px;
             padding: 10px;
@@ -78,7 +73,6 @@
             background: #ff1a1a;
         }
 
-
         .chat-container {
             flex: 1;
             display: flex;
@@ -87,7 +81,6 @@
             padding: 20px;
         }
 
-    
         iframe {
             width: 100%;
             height: 95%;
@@ -96,7 +89,6 @@
             box-shadow: 0 0 15px rgba(0, 198, 255, 0.3);
         }
 
-     
         .chat-history::-webkit-scrollbar {
             width: 6px;
         }
@@ -110,7 +102,6 @@
             border-radius: 10px;
         }
 
-     
         @media (max-width: 768px) {
             .sidebar {
                 width: 60px;
@@ -139,21 +130,17 @@
     </style>
 </head>
 <body>
-
-    
     <div class="sidebar">
         <h2>DataIQ</h2>
         <div class="chat-history" id="chatHistory"></div>
         <button class="clear-history" onclick="clearHistory()">Clear History</button>
     </div>
 
-   
     <div class="chat-container">
         <iframe id="chatFrame" src="https://72e9b0fe6175c4f249.gradio.live/" allow="microphone"></iframe>
     </div>
 
     <script>
-
         function loadChatHistory() {
             let history = JSON.parse(localStorage.getItem('chatHistory')) || [];
             let chatHistoryDiv = document.getElementById("chatHistory");
@@ -168,15 +155,13 @@
             });
         }
 
-
         function saveChatHistory(title, url) {
             let history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-            history.unshift({ title, url }); 
-            if (history.length > 10) history.pop(); 
+            history.unshift({ title, url });
+            if (history.length > 10) history.pop();
             localStorage.setItem('chatHistory', JSON.stringify(history));
             loadChatHistory();
         }
-
 
         function loadChat(url) {
             document.getElementById("chatFrame").src = url;
@@ -189,12 +174,14 @@
 
         document.getElementById("chatFrame").onload = function() {
             let defaultUrl = "https://72e9b0fe6175c4f249.gradio.live/";
-            let randomTitle = "Chat " + (new Date()).toLocaleTimeString();
+            let now = new Date();
+            let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            let formattedDate = now.toLocaleDateString(undefined, options);
+            let randomTitle = formattedDate;
             saveChatHistory(randomTitle, defaultUrl);
         };
 
         loadChatHistory();
     </script>
-
 </body>
 </html>
